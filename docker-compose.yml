@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - '3003:3003'
+  generate-soal-service:
+    build: ./generate-soal-service
+    ports:
+      - '3001:3001'
+  manage-soal-service:
+    build: ./manage-soal-service
+    ports:
+      - '3002:3002'
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: your_db_user
+      POSTGRES_PASSWORD: your_db_password
+      POSTGRES_DB: your_db_name
+    ports:
+      - '5432:5432'
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'

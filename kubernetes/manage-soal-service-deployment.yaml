@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: manage-soal-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: manage-soal-service
+  template:
+    metadata:
+      labels:
+        app: manage-soal-service
+    spec:
+      containers:
+      - name: manage-soal-service
+        image: your-manage-soal-service-image:latest
+        ports:
+        - containerPort: 3002
+        env:
+        - name: DATABASE_URL
+          value: "postgres://your_db_user:your_db_password@postgres:5432/your_db_name"
+        - name: RABBITMQ_URL
+          value: "amqp://rabbitmq"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: manage-soal-service
+spec:
+  ports:
+  - port: 3002
+    targetPort: 3002
+  selector:
+    app: manage-soal-service
